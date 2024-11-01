@@ -1,12 +1,12 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Hello Guys Iam VQ!</Text>
-      <Text>Iam LazyBoy</Text>
-      <StatusBar style="auto" />
+      <Text style={{ color: 'blue', borderColor: "red", borderWidth: 1, fontSize: 30, padding: 4 }}>
+        Hello Guys Iam VQ!
+      </Text>
+      <Text style={styles.hello}>Iam LazyBoy</Text>
     </View>
   );
 }
@@ -18,4 +18,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+
+  hello: {
+    fontSize: 20,
+    color: 'green'
+  }
 });

@@ -1,0 +1,2 @@
+
+- React Native k cs khái niệm CSS, mà là StyleSheet
