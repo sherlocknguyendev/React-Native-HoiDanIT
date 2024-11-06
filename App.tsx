@@ -1,53 +1,97 @@
 import { useState } from 'react';
-import { Button, FlatList, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button, FlatList, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+
+interface ITodo {
+  id: number,
+  name: string
+}
 
 export default function App() {
 
-  const [students, setStudents] = useState([
-    { id: 1, name: 'VanQuoc', age: 18 },
-    { id: 2, name: 'LazyBoy', age: 19 },
-    { id: 3, name: 'Hello', age: 20 },
-  ])
+
+  const [todo, setTodo] = useState('');
+  const [listTodos, setListTodos] = useState<ITodo[]>([])
+
+  function getRandomArbitrary(min: number, max: number) {
+    return Math.random() * (max - min) + min;
+  }
+
+  const handleAddTodo = () => {
+    if (!todo) return;
+    setListTodos([...listTodos, { id: getRandomArbitrary(1, 1000), name: todo }]);
+    setTodo('')
+  }
+
+  const deleteTodo = (id: number) => {
+    const newTodos = listTodos.filter(item => item.id !== id);
+    setListTodos(newTodos);
+  };
 
   return (
     <View style={styles.container}>
-      <Text style={{ fontSize: 50 }}>Hello World</Text>
 
-      <FlatList
-        data={students}
-        keyExtractor={item => item.id + ""}
-        renderItem={(data) => {
-          return (
-            <View key={data.item.id} style={{ padding: 30, backgroundColor: 'pink', marginBottom: 30 }}>
-              <Text>{data.item.name}</Text>
-            </View>
-          )
-        }}
-      >
+      <Text style={styles.header}>Todo List</Text>
+
+      <View>
+
+      </View>
+
+      <TextInput
+        value={todo}
+        style={styles.todoInput}
+        onChangeText={(value) => setTodo(value)}
+      />
+      <Button title='Add Todo' onPress={() => handleAddTodo()} />
 
 
-      </FlatList>
+      <View style={styles.body}>
+        <FlatList
+          data={listTodos}
+          keyExtractor={item => item.id + ""}
+          renderItem={data => {
+            return (
+              <Pressable onPress={() => deleteTodo(data.item.id)}>
+                <Text style={styles.todoItem}>{data.item.name}</Text>
+              </Pressable>
+            )
+          }}
+        />
+      </View>
 
-      {/* <ScrollView>
-        {students.map(item => {
-          return (
-            <View key={item.id} style={{ padding: 30, backgroundColor: 'pink', marginBottom: 30 }}>
-              <Text>{item.name}</Text>
-            </View>
-          )
-        })}
-      </ScrollView> */}
 
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  header: {
+    textAlign: 'center',
+    fontSize: 50,
+    backgroundColor: 'grey',
+    color: 'white',
+    marginTop: 20
+  },
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    padding: 15,
-    marginTop: 20
+    marginTop: 20,
   },
+  todoInput: {
+    borderBottomWidth: 1,
+    borderBottomColor: 'blue',
+    marginHorizontal: 100,
+    marginVertical: 15
+
+  },
+  body: {
+    margin: 15,
+  },
+
+  todoItem: {
+    backgroundColor: 'pink',
+    fontSize: 40,
+    marginVertical: 10,
+    padding: 5
+  }
 
 });
