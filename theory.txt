@@ -1,2 +1,6 @@
 
 - React Native k cs khái niệm CSS, mà là StyleSheet
+
+- Mặc định của React Native là display: flex, còn React Web là display: block
+
+- flex: 1 -> con kế thừa space của thằng cha, hoặc hiểu là còn bao nhiêu space thì chiếm hết
