@@ -1,7 +1,6 @@
 
 import { Text, View } from "react-native"
 import AboutScreen from "./components/review/about";
-import DetailScreen from "./components/review/detail";
 import HomeScreen from "./components/review/home";
 
 import { useFonts } from 'expo-font';
@@ -10,7 +9,11 @@ import { useEffect } from 'react';
 import { OPENSANS_REGULAR } from "./utils/const";
 
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+
+import 'react-native-gesture-handler';
+import AppNavigation from "./components/navigation/app.navigation";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 
 SplashScreen.preventAutoHideAsync(); // chặn hành động tự hiển thị trang ( thay vào đó là hiện màn hình chờ)
@@ -30,24 +33,16 @@ const App = () => {
         return null;
     }
 
-    const Stack = createNativeStackNavigator<RootStackParamList>();
+
 
     return (
+        <SafeAreaView style={{ flex: 1 }}>
+            <NavigationContainer>
 
-        <NavigationContainer>
-            <Stack.Navigator>
-                <Stack.Screen
-                    name="Home"
-                    component={HomeScreen}
-                    options={{ title: 'Overview' }}
-                />
-                <Stack.Screen
-                    name="Detail"
-                    component={DetailScreen}
-                    options={{ title: 'Detail' }}
-                />
-            </Stack.Navigator>
-        </NavigationContainer>
+                <AppNavigation />
+
+            </NavigationContainer>
+        </SafeAreaView>
     )
 }
 

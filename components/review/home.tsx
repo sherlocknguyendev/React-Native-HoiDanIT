@@ -3,6 +3,8 @@ import { Button, FlatList, StyleSheet, Text, TouchableOpacity, View } from "reac
 import { globalStyle } from "../../utils/const";
 import { useState } from "react";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
+import Entypo from '@expo/vector-icons/Entypo';
+import ModalCreate from "./modal.create";
 
 interface IReview {
     id: number,
@@ -31,10 +33,17 @@ const HomeScreen = () => {
     ]);
     const navigation: NavigationProp<RootStackParamList> = useNavigation(); // sd hook thay vì truyền props
 
+    const [modalVisible, setModalVisible] = useState(false);
 
     return (
         <View>
+
             <Text style={[styles.home, globalStyle.globalFont]}>HomeScreen</Text>
+
+            <View style={{ alignItems: 'center' }}>
+                <Entypo name="plus" size={40} color="black" onPress={() => setModalVisible(true)} />
+            </View>
+
             <View>
                 <FlatList
                     keyExtractor={(item) => item.id + ''}
@@ -51,7 +60,14 @@ const HomeScreen = () => {
                 />
             </View>
 
+            <ModalCreate
+                modalVisible={modalVisible}
+                setModalVisible={setModalVisible}
+            />
+
         </View>
+
+
     )
 }
 
